@@ -11,7 +11,9 @@
 module.exports = (robot) ->
 
   robot.hear /(.*)/i, (res) ->
-    res.send "Je suis un perroquet: #{res.message.text}"
+    res.send res.message
+
+
 
 #   robot.hear /badger/i, (res) ->
 #     res.send "Badgers? BADGERS? WE DON'T NEED NO STINKIN BADGERS"
