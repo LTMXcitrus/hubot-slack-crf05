@@ -5,7 +5,7 @@ request = require('request').defaults({
 });
 
 module.exports.parse = function(sentence, callback) {
-  var req = request.post('http://localhost:8888/rest/nlp/parse', {form: parseObject(sentence)},
+  var req = request.post('http://099146ca.ngrok.io//rest/nlp/parse', {form: parseObject(sentence)},
     function (error, response, body) {
       callback(JSON.parse(body));
     });
