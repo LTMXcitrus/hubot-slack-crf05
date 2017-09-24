@@ -1,5 +1,7 @@
 request = require('request').defaults({
-  headers: {'Authorization':'Basic YWRtaW5AdnNjdC5mcjpwYXNzd29yZA=='}
+  headers: {
+    'Authorization':'Basic YWRtaW5AdnNjdC5mcjpwYXNzd29yZA=='
+}
 });
 
 module.exports.parse = function(sentence, callback) {
@@ -17,9 +19,10 @@ parseObject = function(sentence){
     context: {
       language: "fr",
       clientId: "",
-      dialogId: "",
+      dialogId: ""
     }
   });
+  console.log(body);
   return body;
 };
 

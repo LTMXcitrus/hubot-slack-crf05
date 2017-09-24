@@ -5,7 +5,6 @@ module.exports.getAnswer = function(body, callback){
   var entity = body.entities.length > 0
     ? body.retainedQuery.substring(body.entities[0].start, body.entities[0].end)
     : null;
-  var answer = "";
   if(intent === "hello") {
     callback(oneOf(["salut toi", "oh, salut !", "Coucou!"]))
   }
@@ -19,6 +18,18 @@ module.exports.getAnswer = function(body, callback){
   else if(intent === "whereis"){
     callback("Je regarde ça...");
     gSheetsClient.retrieveObject(entity, "Etagere", callback);
+  }
+  else if(intent === "howmany"){
+    callback("Je regarde ça...");
+    gSheetsClient.retrieveObject(entity, "stock", callback);
+  }
+  else if(intent === "expiration"){
+    callback("Je regarde ça...");
+    gSheetsClient.retrieveObject(entity, "expiration date", callback);
+  }
+  else if(intent === "toorder"){
+    callback("Je regarde ça...");
+    gSheetsClient.retrieveObject(entity, "to order", callback);
   }
   else {
     callback("Quelqu'un me parle ?")
