@@ -1,8 +1,9 @@
 request = require('request');
-var url = "https://sheets.googleapis.com/v4/spreadsheets/1Qre169f6PABUH90UR3fIOmK4FCA7-roI3LOh9rR9iZ0/values/A1:H500?key=AIzaSyD3rkOZwXP3Y3LRX6tGP_R8wCTnbMdlrxw";
+
+var SHEETS_URL = process.en.SHEETS_URL;
 
 var retrieveSheet = function (callback) {
-  request.get(url, function (error, response, body) {
+  request.get(SHEETS_URL, function (error, response, body) {
     callback(JSON.parse(body));
   });
 };

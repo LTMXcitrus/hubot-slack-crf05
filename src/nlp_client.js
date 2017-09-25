@@ -4,9 +4,13 @@ request = require('request').defaults({
 }
 });
 
+var nlp_url = process.env.NLP_URL;
+
 module.exports.parse = function(sentence, callback) {
-  var req = request.post('http://099146ca.ngrok.io//rest/nlp/parse', {form: parseObject(sentence)},
+  console.log(nlp_url);
+  var req = request.post(nlp_url+'/rest/nlp/parse', {form: parseObject(sentence)},
     function (error, response, body) {
+    console.log(body);
       callback(JSON.parse(body));
     });
 };
