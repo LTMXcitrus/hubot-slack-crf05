@@ -1,6 +1,6 @@
 request = require('request');
 
-var SHEETS_URL = process.en.SHEETS_URL;
+var SHEETS_URL = process.env.SHEETS_URL;
 
 var retrieveSheet = function (callback) {
   request.get(SHEETS_URL, function (error, response, body) {
