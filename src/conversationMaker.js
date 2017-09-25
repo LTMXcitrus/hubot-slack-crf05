@@ -74,7 +74,7 @@ module.exports.getAnswer = function (body, callback) {
       break;
     }
     case "shrug": {
-      callback("/shrug");
+      callback("¯\\_(ツ)_/¯");
       break;
     }
     default: {
