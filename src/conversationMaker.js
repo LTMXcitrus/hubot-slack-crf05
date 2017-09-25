@@ -51,6 +51,32 @@ module.exports.getAnswer = function (body, callback) {
       callback(oneOf(["Y a pas de problème!", "Mais de rien!", "Avec plaisir!"]));
       break;
     }
+    case "youarenice": {
+      callback(oneOf(["Oh merci !", ":)"]));
+      break;
+    }
+    case "disappointed":
+    case "youarenotnice": {
+      callback(oneOf(["Je fais de mon mieux :'(", "Désolé... :("]))
+      break;
+    }
+    case "whatareyoufor": {
+      callback("Je réponds à la place du MOT quand vous me posez des questions sur le matériel. " +
+        "Vous pouvez me demander où est le matériel, quand est-ce qu'il périme, ... Je ferai de mon mieux pour vous répondre!")
+      break;
+    }
+    case "affirmation": {
+      callback(oneOf(["/shrug", ":)"]));
+      break;
+    }
+    case "congrats": {
+      callback(oneOf(["Je fais de mon mieux ;)", "Merci :)", "Oh tu sais, je ne fais que lire ce qui est écrit! :)"]));
+      break;
+    }
+    case "shrug": {
+      callback("/shrug");
+      break;
+    }
     default: {
       callback("Quelqu'un me parle ?")
     }
