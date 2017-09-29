@@ -8,32 +8,21 @@ var retrieveSheet = function (callback) {
   });
 };
 
-module.exports.retrieveObject = function (object, info, callback) {
-  object = object ? object.toLowerCase() : object;
+module.exports.retrieveObject = function (objects, info, callback) {
+  objects.map(function(object){
+    return object.toLowerCase();
+  });
   info = info ? info.toLowerCase() : info;
   retrieveSheet(function (sheet) {
     var values = sheet.values;
-    var lines = values.length;
-    var j = -1;
-    if (info) {
-      j = 0;
-      var found = false;
-      while (j < values[0].length && !found) {
-        if (values[j][0] && values[0][j].toLowerCase().indexOf(info) !== -1) {
-          found = true;
-        } else {
-          j++;
-        }
-      }
-    }
-    var indexOfInfo = j;
+    var linesNumber = values.length;
+    var headers = values[0];
+    var indexOfInfo = getInfoColumn(headers, info);
     var result = [];
-    if(object) {
-      for (var i = 1; i < lines; i++) {
-        if (values[i][0]) {
-          if (values[i][0].toLowerCase().indexOf(object) !== -1 || object.indexOf(values[i][0].toLowerCase()) !== -1) {
-            result.push(displayLine(values[0], values[i], indexOfInfo));
-          }
+    if(objects.length > 0) {
+      for (var i = 1; i < linesNumber; i++) {
+        if (isInteresting(objects, values[i])) {
+            result.push(displayLine(headers, values[i], indexOfInfo));
         }
       }
     }
@@ -41,9 +30,52 @@ module.exports.retrieveObject = function (object, info, callback) {
       callback(line)
     });
     if (result.length === 0) {
-      callback("Désolé je n'ai rien trouvé pour '" + object + "', mauvaise orthographe ?");
+      callback("Désolé je n'ai rien trouvé pour '" + objects + "', mauvaise orthographe ?");
     }
   });
+};
+
+var getInfoColumn = function(headers, info){
+  var j = -1;
+  if (info) {
+    j = 0;
+    var found = false;
+    while (j < headers.length && !found) {
+      if (headers[j] && headers[j].toLowerCase().indexOf(info) !== -1) {
+        found = true;
+      } else {
+        j++;
+      }
+    }
+  }
+  return j;
+};
+
+/**
+ * Check if the line is what is being looked for
+ * @param objects
+ * @param line
+ * @returns {boolean}
+ */
+var isInteresting = function(objects, line){
+  var found = false;
+  if(line.length > 0 && line[8]) {
+    // retrieve 'tags' column of the line
+    var tags = line[8].split(", ");
+    var objectWords = [];
+    objects.forEach(function (object) {
+      var words = object.split(" ");
+      words.forEach(function (word) {
+        objectWords.push(word.toLowerCase())
+      })
+    });
+    var j = 0;
+    while (j < objectWords.length && !found) {
+      found = (tags.indexOf(objectWords[j]) !== -1); // if the word is present in the tag list
+      j++;
+    }
+  }
+  return found;
 };
 
 
